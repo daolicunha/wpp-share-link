@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="page_title">WhatsApp Link Generator</title>
+    <style>
+        :root {
+            --color-purple: #592EF2;
+            --color-darkBlue: #141926;
+            --color-coolGrey: #BFCAD9;
+            --color-green: #24733F;
+            --color-red: #BF1111;
+            --color-black: #0D0D0D;
+            --color-neonGreen: #29F280;
+            --color-white: #F3F3F3;
+            --color-darkGrey: #535353;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: var(--color-darkBlue);
+            color: var(--color-white);
+            margin: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .logo-bar {
+            justify-self: center;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 64px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            padding: 48px 24px;
+            background-color: var(--color-black);
+            border-radius: 8px;
+            justify-self: center;
+        }
+
+        .header {
+            text-align: center;
+            justify-self: center;
+            margin-bottom: 64px;
+        }
+
+        .header h1 {
+            color: var(--color-neonGreen);
+        }
+
+        .header p {
+            color: var(--color-coolGrey);
+            max-width: 500px;
+        }
+
+        #generator {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        #generator label {
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        #generator input,
+        textarea {
+            margin-bottom: 16px;
+            padding: 8px;
+            background-color: transparent;
+            border: solid 1px var(--color-coolGrey);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--color-white);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        #generator button {
+            cursor: pointer;
+            background-color: var(--color-green);
+            color: var(--color-white);
+            padding: 10px;
+            border: solid 1px var(--color-neonGreen);
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        footer {
+            color: var(--color-darkGrey);
+            width: 100%;
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        #result-container {
+            width: 100%;
+        }   
+
+        #result {
+            padding: 16px;
+            border-radius: 4px;
+            overflow: scroll;
+        }
+
+        .copy-button {
+            cursor: pointer;
+            background-color: var(--color-darkBlue);
+            color: var(--color-coolGrey);
+            width: 100%;
+            padding: 16px;
+            border: solid 1px var(--color-coolGrey);
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        .success {
+            border: solid 1px var(--color-neonGreen);
+        }
+
+        .error {
+            border: solid 1px var(--color-red);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo-bar">
+        <svg width="110" height="32" viewBox="0 0 110 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M0 32V22.9583L3.29773 22.4375V8.79167L0 8.27083V0H24.6712C27.2681 0.555556 29.5353 1.45833 31.4727 2.70833C33.4102 3.94444 34.9147 5.61806 35.9865 7.72917C37.0583 9.82639 37.5942 12.4583 37.5942 15.625C37.5942 18.75 37.0789 21.3681 36.0483 23.4792C35.0178 25.5764 33.5613 27.25 31.6788 28.5C29.7964 29.75 27.5635 30.6458 24.9803 31.1875C22.4108 31.7292 19.5803 32 16.4887 32H0ZM16.4887 22.4375H18.5085C20.2673 22.4375 21.6414 22.1597 22.6307 21.6042C23.62 21.0347 24.1765 19.9722 24.3002 18.4167C24.3277 18 24.3483 17.5625 24.362 17.1042C24.3757 16.6319 24.3826 16.1389 24.3826 15.625C24.3826 13.9861 24.2383 12.6667 23.9498 11.6667C23.6612 10.6667 23.0979 9.9375 22.2597 9.47917C21.4215 9.02083 20.1711 8.79167 18.5085 8.79167H16.4887V22.4375Z"
+                fill="#592EF2" />
+            <path
+                d="M44.4576 32V22.9583L47.7141 22.4375V8C46.6286 8 45.7354 8.29167 45.0347 8.875C44.3339 9.44444 43.743 10.0417 43.2621 10.6667H39.7995V0H68.8196V10.6667H65.3569C64.8898 10.0417 64.2989 9.44444 63.5844 8.875C62.8836 8.29167 61.9905 8 60.905 8V22.4375L64.1615 22.9583V32H44.4576Z"
+                fill="#592EF2" />
+            <path
+                d="M71.3753 32V22.9583L74.6318 22.4375V9.5625L71.3753 9.04167V0H87.8227V12.8333L93.6556 0H110V5.125C108.09 6.52778 106.338 8.13194 104.744 9.9375C103.15 11.7431 101.694 13.6389 100.375 15.625C101.831 17.6389 103.329 19.6736 104.868 21.7292C106.421 23.7847 108.118 25.6319 109.959 27.2708V32H93.6556L87.8227 18.6458V32H71.3753Z"
+                fill="#592EF2" />
+        </svg>
+        <a href="#">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_2_4)">
+                    <path
+                        d="M12 0C5.37 0 0 5.37 0 12C0 17.31 3.435 21.795 8.205 23.385C8.805 23.49 9.03 23.13 9.03 22.815C9.03 22.53 9.015 21.585 9.015 20.58C6 21.135 5.22 19.845 4.98 19.17C4.845 18.825 4.26 17.76 3.75 17.475C3.33 17.25 2.73 16.695 3.735 16.68C4.68 16.665 5.355 17.55 5.58 17.91C6.66 19.725 8.385 19.215 9.075 18.9C9.18 18.12 9.495 17.595 9.84 17.295C7.17 16.995 4.38 15.96 4.38 11.37C4.38 10.065 4.845 8.985 5.61 8.145C5.49 7.845 5.07 6.615 5.73 4.965C5.73 4.965 6.735 4.65 9.03 6.195C9.99 5.925 11.01 5.79 12.03 5.79C13.05 5.79 14.07 5.925 15.03 6.195C17.325 4.635 18.33 4.965 18.33 4.965C18.99 6.615 18.57 7.845 18.45 8.145C19.215 8.985 19.68 10.05 19.68 11.37C19.68 15.975 16.875 16.995 14.205 17.295C14.64 17.67 15.015 18.39 15.015 19.515C15.015 21.12 15 22.41 15 22.815C15 23.13 15.225 23.505 15.825 23.385C18.2076 22.5814 20.278 21.0505 21.7446 19.008C23.2112 16.9656 24 14.5145 24 12C24 5.37 18.63 0 12 0Z"
+                        fill="#592EF2" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_2_4">
+                        <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+        </a>
+    </div>
+    <div class="header">
+        <h1>WHATSAPP LINK GENERATOR</h1>
+        <p>Crie um link do WhatsApp com mensagem personalizada para facilitar o primeiro contato com seus leads!</p>
+    </div>
+    <div class="container">
+        <form id="generator">
+            <label for="number">Telefone + DDD (somente números)</label>
+            <input id="number" type="tel" pattern="[0-9]{10,15}" inputmode="numeric" placeholder="Ex: 12988990011"
+                required>
+
+            <label for="message">Mensagem</label>
+            <textarea id="message" rows="3" placeholder="Escreva sua mensagem personalizada" required></textarea>
+
+            <button type="submit">Gerar Link</button>
+        </form>
+        <div id="result-container" class="hidden">
+            <div id="result"></div>
+            <button id="copy-link" class="copy-button">Copiar link</button>
+        </div>
+    </div>
+    <footer>
+        <p>Daniel Cunha © 2025 MIT License</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('generator');
+        const result = document.getElementById('result');
+        const resultContainer = document.getElementById('result-container');
+
+        const linkCopyButton = document.getElementById('copy-link');
+        const defaultCopyButtonText = linkCopyButton.textContent; // store default button text for reset
+
+        // Encoder script
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const number = form.number.value;
+            const message = form.message.value.trim();
+
+            // check for empty number or message
+            if (!number || !message) {
+                result.classList.remove('success');
+                result.classList.add('error');
+                result.innerHTML = 'Adicione um número de telefone com DDD e uma mensagem para criar seu link personalizado';
+                return;
+            };
+
+            result.classList.remove('error');
+            const encodedMessage = encodeURIComponent(message);
+            const link = `https://api.whatsapp.com/send?phone=55${number}&text=${encodedMessage}`;
+
+            result.classList.add('success');
+            result.innerHTML = `<p id="text-to-copy">${link}</p>`;
+            resultContainer.classList.remove('hidden');
+        });
+
+        linkCopyButton.addEventListener('click', async () => {
+            const textToCopyElement = document.getElementById('text-to-copy');
+
+            if (!textToCopyElement) {
+                console.warn('Error: generated link was not found');
+                return;
+            }
+
+            const textToCopy = textToCopyElement.textContent;
+
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+
+                // update button for success state
+                linkCopyButton.classList.remove('error');
+                linkCopyButton.classList.add('success');
+                linkCopyButton.textContent = 'Link copiado!';
+            } catch (err) {
+                console.error('Erro ao copiar link gerado: ', err);
+
+                // update button for error state
+                linkCopyButton.classList.remove('success');
+                linkCopyButton.classList.add('error');
+                linkCopyButton.textContent = 'Um erro aconteceu. Recarregue a página e tente novamente.';
+            } finally {
+                // reset button
+                setTimeout(() => {
+                    linkCopyButton.classList.remove('success', 'error'); // clean up classes
+                    linkCopyButton.textContent = defaultCopyButtonText; // reset button text
+                }, 2000); // resets after 2 seconds
+            }
+        });
+    </script>
+</body>
+
+</html>
